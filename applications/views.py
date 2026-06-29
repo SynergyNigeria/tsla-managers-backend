@@ -1,14 +1,27 @@
 from django.conf import settings
 from django.http import JsonResponse
-from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
 from .models import ManagerApplication
 
 
-def frontend_page(request, page):
-    return render(request, page)
+def api_home(request):
+    return JsonResponse(
+        {
+            "service": "TSA Managers API",
+            "status": "ok",
+            "endpoints": [
+                "/api/applications",
+                "/api/applications/<application_id>",
+                "/api/applications/<application_id>/capacity",
+            ],
+        }
+    )
+
+
+def favicon(request):
+    return JsonResponse({}, status=204)
 
 
 def with_cors(response):
